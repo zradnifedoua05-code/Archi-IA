@@ -1,0 +1,71 @@
+# TD1-2 / TD2-1 / TD2-3 / TD2-5 — stack exacte du cours Architectures IA
+# GPU NVIDIA (prompt « adds ollama docker with gpu access ») :
+#   docker compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
+services:
+  # Prompt: adds elasticsearch with docker image elasticsearch:9.3.2
+  # with http cors enabled and xpack.security.enabled to false
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.3.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+      - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200 >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  # Prompt: adds ollama docker with gpu access (voir docker-compose.gpu.yml sur Linux+NVIDIA)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD-SHELL", "ollama list >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  # Prompt: adds fastapi backend built from folder fastapi-backend
+  # TD2-3: ELASTICSEARCH_HOST=http://elasticsearch:9200 + port 5678:5678
+  backend:
+    build: ./fastapi-backend
+    container_name: fastapi-backend
+    ports:
+      - "8000:8000"
+      - "5678:5678"
+    environment:
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    volumes:
+      - ./fastapi-backend:/app
+
+  # TD2-5 — front dockerisé exactement comme le slide
+  front:
+    build: ./react-front
+    container_name: react-front
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  esdata:
+  ollama_data:

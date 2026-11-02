@@ -1,0 +1,12 @@
+**/__pycache__/
+**/.venv/
+**/node_modules/
+**/dist/
+**/.DS_Store
+**/.pytest_cache/
+**/.mypy_cache/
+**/*.egg-info/
+.env
+*.log
+_tp_extract/
+td1_colab/.venv/
