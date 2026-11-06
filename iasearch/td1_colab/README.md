@@ -1,20 +1,15 @@
 # TD1-1 — Notebook Colab + TensorFlow Projector
 
-## Exécuté
+## Fichiers prêts
 
-Les 5 cellules du cours ont été exécutées (script local équivalent Colab) :
+### 1) Lignes (déjà chargé si tu as fait UMAP sur 998 points)
+- `projector_lines/vectors.tsv`
+- `projector_lines/metadata.tsv` (sans en-tête)
 
-1. Download pCloud → 998 lignes
-2. Embeddings Hugging Face (`paraphrase-multilingual-MiniLM-L12-v2`)
-3. TSV lines → `projector_lines/`
-4. KMeans k=10
-5. TSV clusters → `projector_clusters/`
+### 2) Clusters (à charger maintenant)
+- `projector_clusters/vectors.tsv`
+- `projector_clusters/metadata.tsv` (avec en-tête `cluster	label` — normal, 2 colonnes)
 
-Notebook : `TD1_1_embeddings_clustering.ipynb` (à ouvrir aussi dans Google Colab).
+Sur https://projector.tensorflow.org/ → **Load** → choisir les 2 fichiers clusters → puis **UMAP**.
 
-## Étape manuelle demandée par le prof (Projector)
-
-1. Ouvrir https://projector.tensorflow.org/
-2. **Load** → choisir `projector_lines/vectors.tsv` puis `projector_lines/metadata.tsv`
-3. Passer de **PCA** à **UMAP**
-4. Recommencer avec `projector_clusters/vectors.tsv` + `metadata.tsv`
+Notebook : `TD1_1_embeddings_clustering.ipynb`

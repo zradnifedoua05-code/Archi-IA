@@ -1,0 +1,21 @@
+À : nicolas.debeissat@mail-formateur.net
+
+Objet : [Architectures IA] Rendu projet iasearch — zradnifedoua
+
+Bonjour Monsieur Debeissat,
+
+Je vous envoie mon projet d'évaluation du module Architectures IA.
+
+Lien du dépôt GitHub (recommandé) :
+https://github.com/zradnifedoua05-code/Archi-IA
+
+Le code se trouve dans le dossier iasearch/ (docker-compose, index_data, fastapi-backend, react-front, notebook TD1 + fichiers projector).
+
+Participant(s) :
+- Nom / Prénom : [À COMPLÉTER]
+- (Si groupe de 2 ou 3 : ajouter les autres noms ici ET dans l'objet du mail)
+
+Délai : rendu dans les 3 semaines à partir de la fin du module.
+
+Cordialement,
+[Ton Prénom Nom]
